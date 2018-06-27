@@ -1,0 +1,109 @@
+/*GLOBALS-----------------------------*/
+html{
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+:root{
+    --offgrey:#85929E;
+    --watermelon:#E74C3C;
+    --light-grey:#E5E7E9;  
+}
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    color: var(--watermelon);
+}
+/*HEADERS-----------------------------*/
+#etitle{
+	text-align:center;
+}
+#etitle h1{
+    color: var(--watermelon);
+    font-size: 60px;
+}
+.navbar-inverse{
+    background-color: (--watermelon);
+}
+/*TABS------------------------------------*/
+.etabs {
+    overflow: hidden;
+    text-align: center;
+    /*border: 1px solid var(--offgrey);*/
+    /*background-color: #f1f1f1;*/
+    border-collapse: collapse;
+}
+/* Style the buttons inside the tab */
+
+.etabs button {
+    /*border: 1px solid var(--offgrey);*/
+    /*outline: none;*/
+    cursor: pointer;
+    padding: 10px 12px;
+    transition: 0.3s;
+    font-size: 15px;
+    margin: 2px 2px;
+}
+/* Change background color of buttons on hover */
+.etabs button:hover {
+    background-color: #ddd;
+}
+/* Create an active/current tablink class */
+.etabs button.active {
+    background-color: #ccc;
+}
+/*TAB CONTENT------------------------------*/
+.etabcontent {
+    margin-top: 2px;
+    display: none;
+    background-color: var(--light-grey);
+    padding: 2% 4%;
+    border: 1px solid #85929E;
+    border-top: none;
+    border-left:none;
+    overflow:auto;
+}
+.etabcontent h2{
+    color: var(--watermelon);
+    text-align: center;
+}
+.table-totals{
+    border-collapse: collapse;
+    border:solid 1px black;
+    position:relative;
+    left: 10px;
+    padding: 10px 12px;
+}
+.table-totals th, td{
+   text-align: center;
+   border: solid 1px black;
+}
+.table-totals a{
+	margin: 2px 10px;
+}
+.table-totals tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+/*-----METER TABLE-----------------*/
+.etabcontent-meters{
+    padding: 2% 4%;
+    margin-top:4px;
+    text-align: center;
+    overflow: auto;
+}
+.etabcontent-meters h2{
+    color: var(--watermelon);
+}
+.meter-list{
+   border: solid 1px black;
+   overflow:scroll;
+}
+.meter-list th{
+	border: solid 1px black;
+	text-align:center;
+}
