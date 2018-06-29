@@ -96,9 +96,14 @@ a:hover{
     text-align: center;
     overflow: auto;
 }
+.meters-header{
+	color: var(--watermelon);
+	text-align:center;
+}
+/*
 .etabcontent-meters h2{
     color: var(--watermelon);
-}
+}*/
 .meter-list{
    border: solid 1px black;
    overflow:scroll;

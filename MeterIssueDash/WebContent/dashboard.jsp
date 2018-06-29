@@ -221,12 +221,16 @@
 		</div>
 	</div>
 	
+	<c:if test = "${not empty FLAGGED_METERS}">
+	<div class = "meters-header"><h2>${FLAGGED_METERS[0].info}</h2></div>
+	</c:if>
+	
 	<div class = "etabcontent-meters" id = meters-table>
 		<c:if test = "${empty FLAGGED_METERS}">
 			<h2 id = "NR">${NO_RESULTS}</h2>
 		</c:if>
 		<c:if test = "${not empty FLAGGED_METERS}">
-			<h2>${FLAGGED_METERS[0].info}</h2>
+			<!-- <h2>${FLAGGED_METERS[0].info}</h2> -->
 			<table class = "table table-hover table-striped meter-list">
 				<tr>
 					<th>Posting Date</th>

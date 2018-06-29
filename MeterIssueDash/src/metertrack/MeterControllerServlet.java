@@ -23,7 +23,7 @@ public class MeterControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private DashboardDbUtil dashboardDbUtil;
 	
-    @Resource(name="jdbc/metering")
+    @Resource(name="jdbc/ebdb")
 	private DataSource dataSource;
     
 	public void init() throws ServletException {
