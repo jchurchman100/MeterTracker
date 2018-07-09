@@ -8,7 +8,7 @@ html{
 :root{
     --offgrey:#85929E;
     --watermelon:#E74C3C;
-    --light-grey:#E5E7E9;  
+    --light-grey:#ffffb3;  
 }
 body {
 	font-family: 'Open Sans', sans-serif;
@@ -19,6 +19,15 @@ a{
 a:hover{
     color: var(--watermelon);
 }
+
+/*--------------NAVBAR---------------*/
+.navbar-inverse .navbar-brand{
+	color: white;
+}
+.navbar-inverse .navbar-nav .active a{
+	background-color: white;
+	color: var(--watermelon);
+} 
 /*HEADERS-----------------------------*/
 #etitle{
 	text-align:center;
@@ -28,7 +37,11 @@ a:hover{
     font-size: 60px;
 }
 .navbar-inverse{
-    background-color: (--watermelon);
+    background-color: var(--watermelon);
+    border-color: var(--watermelon);
+}
+.jumbotron{
+	background-color: var(--light-grey);
 }
 /*TABS------------------------------------*/
 .etabs {
@@ -48,6 +61,7 @@ a:hover{
     transition: 0.3s;
     font-size: 15px;
     margin: 2px 2px;
+    background-color: var(--light-grey);
 }
 /* Change background color of buttons on hover */
 .etabs button:hover {
@@ -55,7 +69,7 @@ a:hover{
 }
 /* Create an active/current tablink class */
 .etabs button.active {
-    background-color: #ccc;
+    background-color: #ffe066;
 }
 /*TAB CONTENT------------------------------*/
 .etabcontent {

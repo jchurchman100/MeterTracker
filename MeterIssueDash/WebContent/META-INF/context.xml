@@ -1,19 +1,20 @@
 <Context>
-  <!-- <Resource name="jdbc/metering" 
+  <!--	 <Resource name="jdbc/metering" 
   			auth="Container" type="javax.sql.DataSource"
-               maxActive="20" maxIdle="5" maxWait="10000"
-               username="meterman" password="meterman" 
-               driverClassName="oracle.jdbc.driver.OracleDriver"
-               url ="jdbc:oracle:thin:@localhost:1521:xe"
-               />-->
+           	maxActive="100" maxIdle="25" maxWait="30000"
+            username="meterman" password="meterman" 
+            driverClassName="oracle.jdbc.driver.OracleDriver"
+            url ="jdbc:oracle:thin:@localhost:1521:xe"
+            /> -->
                
- <Resource name="jdbc/ebdb" 
+<Resource name="jdbc/ebdb" 
   			auth="Container" type="javax.sql.DataSource"
-               maxActive="20" maxIdle="5" maxWait="10000"
+               maxActive="100" maxIdle="25" maxWait="30000"
                username="********" password="********" 
                driverClassName="com.mysql.jdbc.Driver"
                url ="jdbc:mysql://aa1f6m4avwywddo.cuvovvyuzdqt.us-east-2.rds.amazonaws.com:3306/ebdb"
                factory="org.apache.commons.dbcp.BasicDataSourceFactory"
+               autoReconnect="true"
                />
 
 </Context>

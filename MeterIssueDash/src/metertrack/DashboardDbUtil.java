@@ -31,6 +31,7 @@ public class DashboardDbUtil {
 			myConn = dataSource.getConnection();
 			//prepare and create sql statement
 			setter = new MySqlSetter();
+			//setter = new SqlSetter();
 			sql = setter.getSql(meterFlag.toLowerCase());
 			myStmt = myConn.createStatement();
 			//execute query 
