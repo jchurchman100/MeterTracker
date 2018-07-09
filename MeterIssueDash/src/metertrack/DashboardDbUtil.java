@@ -23,15 +23,15 @@ public class DashboardDbUtil {
 		Connection myConn = null;
 		Statement myStmt = null;
 		ResultSet myRs = null;
-		MySqlSetter setter = null;
-		//SqlSetter setter = null;
+		//MySqlSetter setter = null;
+		SqlSetter setter = null;
 		
 		try {
 			//get a connection
 			myConn = dataSource.getConnection();
 			//prepare and create sql statement
-			setter = new MySqlSetter();
-			//setter = new SqlSetter();
+			//setter = new MySqlSetter();
+			setter = new SqlSetter();
 			sql = setter.getSql(meterFlag.toLowerCase());
 			myStmt = myConn.createStatement();
 			//execute query 
@@ -80,8 +80,8 @@ public class DashboardDbUtil {
 		Statement myStmt = null;
 		ResultSet myRs = null;
 		ResultSetMetaData rsmd = null;
-		MySqlSetter setter = new MySqlSetter();
-		//SqlSetter setter = new SqlSetter();
+		//MySqlSetter setter = new MySqlSetter();
+		SqlSetter setter = new SqlSetter();
 
 		try { 
 			//get connection
