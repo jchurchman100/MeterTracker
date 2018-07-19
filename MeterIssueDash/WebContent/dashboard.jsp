@@ -15,6 +15,7 @@
 </head>
 
 <body>
+	<!-- NAVIGATION BAR -->
 	<nav class="navbar navbar-inverse">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
@@ -23,9 +24,10 @@
 	    <ul class="nav navbar-nav">
 	      <li class="active"><a href="MeterControllerServlet">Home</a></li>
 	    </ul>
-	    <form class="navbar-form navbar-right" action="/search.java">
+	    <form class="navbar-form navbar-right" action="MeterControllerServlet" method = "GET">
+	    	<input type ="hidden" name = "command" value = "SEARCH">
 	      <div class="form-group">
-	        <input type="text" class="form-control" placeholder="Search">
+	        <input type="text" class="form-control" placeholder="Search" name = "SearchId">
 	      </div>
 	      <button type="submit" class="btn btn-default">Submit</button>
 	    </form>
@@ -33,11 +35,12 @@
 	</nav>
 
 <div class = "container">
+	<!-- JUMBOTRON -->
 	<div id = "etitle" class = "jumbotron">
 		<h1>Metering Issue Tracking</h1>
 	</div>
 	
-
+	<!-- Alarm Tab Buttons -->
 	<div class = "etabs">
 		<div class = "row">
 			<div class ="col-md-1"></div>
@@ -54,7 +57,8 @@
 	  		<div class ="col-md-1"></div>
   		</div>
 	</div>
-
+	
+	<!-- NVM ERRORS TABLE -->
 	<div id="nvm" class="etabcontent">
 		<h2>Non-Volatile Memory Errors</h2>
 		<div class = "row">
@@ -81,6 +85,7 @@
 		</div>
 	</div>
 
+	<!-- HOTSOCKET ALERTS TABLE -->
 	<div id="hotsocket" class="etabcontent">
 		<h2>HOT SOCKET ALERTS</h2>
 		<div class = "row">
@@ -107,7 +112,8 @@
 			<div class = "col-md-7"></div>
 		</div>
 	</div>
-
+	
+	<!-- WIRING ERRORS TABLE -->
 	<div id="wiring" class="etabcontent">
 		<h2>WIRING ALERTS</h2>
 		<div class = "row">
@@ -166,6 +172,7 @@
 		</div>
 	</div>
 
+	<!-- PHASE OUT ERRORS TABLE -->
 	<div id="phase" class="etabcontent">
 		<h2>PHASE OUT ERRORS</h2>
 		<div class = "row">
@@ -198,6 +205,7 @@
 		</div>
 	</div>
 
+	<!-- ELC ALARMS TABLE -->
 	<div id="elc" class="etabcontent">
 		<h2>EXCESSIVE LEADING CURRENT ALARMS</h2>
 		<div class = "row">
@@ -221,16 +229,21 @@
 		</div>
 	</div>
 	
+	<!-- METER DISPLAY TABLE -->
 	<c:if test = "${not empty FLAGGED_METERS}">
 	<div class = "meters-header"><h2>${FLAGGED_METERS[0].info}</h2></div>
 	</c:if>
 	
+	<c:if test = "${not empty FOUND_METER}">
+	<div class = "meters-header"><h2>Meter : ${FOUND_METER.meterId}</h2></div>
+	</c:if>
+	
+	
 	<div class = "etabcontent-meters" id = meters-table>
-		<c:if test = "${empty FLAGGED_METERS}">
+		<c:if test = "${empty FLAGGED_METERS and empty FOUND_METER}">
 			<h2 id = "NR">${NO_RESULTS}</h2>
 		</c:if>
 		<c:if test = "${not empty FLAGGED_METERS}">
-			<!-- <h2>${FLAGGED_METERS[0].info}</h2> -->
 			<table class = "table table-hover table-striped meter-list">
 				<tr>
 					<th>Posting Date</th>
@@ -243,8 +256,7 @@
 					<th>Current A</th>
 					<th>Current B</th>
 					<th>Current C</th>
-				</tr>
-		</c:if>
+				</tr>	
 			<c:forEach var = "temp_meter" items = "${FLAGGED_METERS}">
 				<tr>
 					<td>${temp_meter.date}</td>
@@ -260,6 +272,35 @@
 				</tr>
 			</c:forEach>
 		</table>
+		</c:if>
+		<c:if test = "${not empty FOUND_METER}">
+			<table class = "table table-hover table-striped meter-list">
+				<tr>
+					<th>Meter ID</th>
+					<th>Form ID</th>
+					<th>Program ID</th>
+					<th>Flags</th>
+					<th>Voltage A</th>
+					<th>Voltage B</th>
+					<th>Voltage C</th>
+					<th>Current A</th>
+					<th>Current B</th>
+					<th>Current C</th>
+				</tr>	
+				<tr>
+					<td>${FOUND_METER.meterId}</td>
+					<td>${FOUND_METER.form}</td>
+					<td>${FOUND_METER.program}</td>
+					<td>${FOUND_METER.info}</td>
+					<td>${FOUND_METER.volA}</td>
+					<td>${FOUND_METER.volB}</td>
+					<td>${FOUND_METER.volC}</td>
+					<td>${FOUND_METER.curA}</td>
+					<td>${FOUND_METER.curB}</td>
+					<td>${FOUND_METER.curC}</td>
+				</tr>
+		</table>
+		</c:if>
 	</div>
 
 </div>

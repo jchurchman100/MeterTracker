@@ -15,24 +15,13 @@
     <servlet-name>MeterControllerServlet</servlet-name>
     <url-pattern>/MeterControllerServlet</url-pattern>
   </servlet-mapping> -->
-  
-  
-  <security-constraint>
-    <web-resource-collection>
-        <web-resource-name>Private</web-resource-name>
-        <url-pattern>/private/*</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-        <role-name>friends</role-name>
-    </auth-constraint>
-</security-constraint>
 
-<login-config>
-    <auth-method>FORM</auth-method>
-    <realm-name>Private</realm-name>
-    <form-login-config>
-        <form-login-page>/private/login.jsp</form-login-page>
-        <form-error-page>/private/error.jsp</form-error-page>
-    </form-login-config>
-</login-config>
+	<!-- <login-config>
+	    <auth-method>FORM</auth-method>
+	    <realm-name>Private</realm-name>
+	    <form-login-config>
+	        <form-login-page>/private/login.jsp</form-login-page>
+	        <form-error-page>/private/error.jsp</form-error-page>
+	    </form-login-config>
+	</login-config> -->
 </web-app>

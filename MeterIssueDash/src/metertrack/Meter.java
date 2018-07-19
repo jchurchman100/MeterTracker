@@ -1,5 +1,11 @@
 package metertrack;
 
+/**
+ * Class to represent metering data extracted from the database. The fields are arbitrary and can be replaced to represent
+ * the information desired from each meter.
+ * @author Jared Churchman
+ * @version 1.0
+ */
 public class Meter {
 	private int meterId;
 	private String program;
@@ -13,6 +19,19 @@ public class Meter {
 	private double curB;
 	private double curC;
 	
+	/**
+	 * 
+	 * @param id Meter ID number
+	 * @param meterProgram Program ID
+	 * @param form_id Form ID
+	 * @param e_info Describes the meter flag type
+	 * @param voltageA Phase A voltage
+	 * @param voltageB Phase B voltage
+	 * @param voltageC Phase C voltage
+	 * @param currentA Phase A current
+	 * @param currentB Phase B current
+	 * @param currentC Phase C current
+	 */
 	public Meter(int id, String meterProgram, String form_id, String e_info, 
 			double voltageA, double voltageB, double voltageC,
 			double currentA, double currentB, double currentC) {

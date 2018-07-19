@@ -1,15 +1,31 @@
 package metertrack;
 
+/**
+ * Helper Java class meant to assist DashboardDbUtil with querying a MySQL database. Contains methods which will provide the DashboardDbUtil
+ * with the correct SQL needed to fulfill a request.
+ * @author Jared Churchman
+ * @version 4.3
+ */
 public class MySqlSetter {
 	private String sql;
 	
+	/**
+	 * Calls setSql with flag_id and then returns sql  field
+	 * @param flag_id Flag ID to query for in the database
+	 * @return SQL String to query for the specified flag with
+	 */
 	public String getSql(String flag_id) {
 		setSql(flag_id);
 		return sql;
 	}
-
+	
+	/**
+	 * Sets sql field to the correct query String using the Switch statement
+	 * @param flag_id Flag ID to query for in the database
+	 */
 	public void setSql(String flag_id) {	
 		switch(flag_id){
+			/*Non-Volatile Memory Errors*/
 			case "nvm_total":
 				this.sql ="select n.error_date, n.error_type, m.* from nvm_errors as n " 
 				+"join meters as m on m.meter_id = n.METER_ID order by n.error_date DESC";
@@ -31,7 +47,8 @@ public class MySqlSetter {
 				+"AND (m.VOLTAGE_A < 108 OR m.voltage_b < 108 OR m.voltage_c < 108) "
 				+"order by n.error_date DESC";
 				break;
-				
+			
+			/*Hot Socket Alerts*/
 			case "hsa_3":
 				this.sql = "select hcounts.voltage_outages, m.* from meters as m inner join "
 						+ "(select h.meter_id,count(*) as voltage_outages "
@@ -56,7 +73,8 @@ public class MySqlSetter {
 						+ "on hcounts.meter_id = m.meter_id "
 						+ "where hcounts.voltage_outages >= 10";
 				break;
-				
+			
+			/*Wiring Errors*/
 			case "wire9_3v":
 				this.sql = "select * from meters where form = '9S' AND VOLTAGE_A < 3";
 				break;
@@ -90,6 +108,7 @@ public class MySqlSetter {
 				this.sql = "select * from meters where form = '12S' AND VOLTAGE_A < 216";
 				break;
 			
+			/*Phase Out Errors*/
 			case "phase_total":
 				this.sql = "select p.error_date, p.error_type, m.* from meters as m "
 						+ "join phase_out_errors as p on p.meter_id = m.meter_id "
@@ -128,13 +147,21 @@ public class MySqlSetter {
 				+"where p.error_type = 'B' OR error_type ='C' "
 				+"order by m.meter_id, p.ERROR_DATE DESC";
 				break;
+			
+			/*Excessive Leading Current Alarms*/
 			case "elc_total":
 				this.sql = "select e.error_date, m.* from meters as m join elc_alarms_total as e "
 						+ "on e.meter_id = m.meter_id order by e.error_date DESC";
 		}
 	}
+	
+	/**
+	 * Returns a large SQL String used to query for the counts of all the flags/alarms
+	 * @return SQL String to for aggregating flag counts
+	 */
 	public String bigSQL() {
 			String bSql = "SELECT " 
+							/*Non-Volatile Memory Errors*/
 							+"(select count(*) from(select n.ERROR_DATE, n.ERROR_TYPE, m.* "
 							+"from NVM_ERRORS as n join METERS as m on m.METER_ID = n.METER_ID)as tot) as nvm_total, "
 											    	    
@@ -151,6 +178,8 @@ public class MySqlSetter {
 							+"where n.ERROR_TYPE = 'GENERAL' AND (m.FORM = '9S' OR m.FORM = '16S') "
 							+"AND (m.VOLTAGE_A < 108 OR m.voltage_b < 108 OR m.voltage_c < 108) "
 							+"order by n.ERROR_DATE)as tot) as nvm_any, "
+							
+							/*Hot Socket Alerts*/
 
 							+"(select count(*) from(select hcounts.voltage_outages, m.* from METERS as m inner join "
 							+"(select h.METER_ID,count(*) as voltage_outages "
@@ -172,6 +201,8 @@ public class MySqlSetter {
 							+"group by METER_ID) as hcounts "
 							+"on hcounts.METER_ID = m.METER_ID "
 							+"where hcounts.voltage_outages >= 10) as tot) as hsa_10, "
+							
+							/*Wiring Errors*/
 
 							+"(select count(*) from (select * from METERS where FORM = '9S' AND VOLTAGE_A < 3)as tot) as wire9_3V, "
 							+"(select count(*) from (select * from METERS where FORM = '9S' AND CURRENT_A < 3)as tot) as wire9_3C, "
@@ -187,7 +218,9 @@ public class MySqlSetter {
 							+"(select count(*) from (select * from METERS where FORM = '2S' AND VOLTAGE_A < 216 )as tot) as wire2_Low, "
 							+"(select count(*) from (select * from METERS where FORM = '12S' AND VOLTAGE_A > 255 )as tot) as wire12_High, "
 							+"(select count(*) from (select * from METERS where FORM = '12S' AND VOLTAGE_A < 216 )as tot) as wire12_Low, "
-
+							
+							/*Phase Out Errors*/
+							
 							+"(select count(*) from (select p.ERROR_DATE, p.ERROR_TYPE, m.* "
 							+"from METERS as m join PHASE_OUT_ERRORS as p on p.METER_ID = m.METER_ID "
 							+"order by p.ERROR_DATE, m.METER_ID)as tot) as phase_Total, "
@@ -218,6 +251,8 @@ public class MySqlSetter {
 							+"from METERS as m join PHASE_OUT_ERRORS as p on p.METER_ID = m.METER_ID "
 							+"where p.ERROR_TYPE = 'B' OR p.ERROR_TYPE = 'C' "
 							+"order by p.ERROR_DATE, m.METER_ID)as tot) as phase_BC, "
+							
+							/*Excessive Leading Current Alarms*/
 											    	    
 							+"(select count(*) from (select e.ERROR_DATE, m.* from METERS as m "
 							+"join ELC_ALARMS_TOTAL as e on e.METER_ID = m.METER_ID order by e.ERROR_DATE)as tot) as elc_total";
