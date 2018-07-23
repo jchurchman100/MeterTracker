@@ -23,13 +23,13 @@ Below is a rundown of each components functionality and what needs to be updated
 This is the Java Servlet controlling the other components in the application. You may think of it as the "C" in MVC while "dashboard.jsp" can be viewed as the "V". 
 
 ### @Resource
-The Resource tag at the top of the page "@Resource(name="jdbc/********")" tells the Server Application where to find your database and sets your DataSource object to point to it. The value set for name should be the name of your resource as set in your context.xml.
+The Resource tag at the top of the page "@Resource(name="jdbc/********")" tells the server application where to find your database and sets your dataSource object to point to it. The value set for name should be the name of your resource as set in your context.xml.
 
 ### init()
-The first method run by the app. This will point your "dashboardDbUtil" object to the connection pool using the dataSource object.
+The first method run by the app. This will point your dashboardDbUtil object to the connection pool using the dataSource object.
 
 ### doGet()
-Interaction with the database is performed through the doGet method which performs as a HTTP GET method. Upon receiving a GET request from the dashboard.jsp the method will read the command parameter passed to it in the request parameter will perform one of two methods(aggregateMeters(), listMeters()) based on the value through the switch() statement. By default doGet will run aggregateMeters(request,response). 
+Interaction with the database is performed through the doGet() method which performs as a HTTP GET method. Upon receiving a GET request from the dashboard.jsp the method will read the command parameter passed to it through the request object and will execute the appropriate case in the switch statement. By default doGet() will run aggregateMeters(). 
 
 *For the Servlet to perform new commands a new case should be added to the switch() statement.*
 
@@ -45,7 +45,7 @@ LIST command. Utilizes dashboardDbUtil to query the database based on the "flag_
 SEARCH command. Retrieves "SearchId" parameter sent from the search bar in the JSP and uses the dashboardDbUtil to query the database for the specified meter. If the meter is not found the "NO_RESULTS" attribute is set, else the "FOUND_METER" attribute is set with the meter data. aggregateMeters() is then called to reset the totals hyperlinks and dispatch back to the JSP.
 
 ### doPost()
-Currently calls to the doGet method. Should be used for requests for login authentication. 
+Currently calls the doGet() method. Should be used for requests for login authentication. 
 
 
 ## DashboardDbUtil.java
