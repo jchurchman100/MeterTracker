@@ -49,6 +49,7 @@ public class MeterControllerServlet extends HttpServlet {
 	}
 	
 	/**
+	 * Handles HTTP GET requests. Executes based on the value of the command parameter sent.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -85,9 +86,9 @@ public class MeterControllerServlet extends HttpServlet {
 	 * Generates total flag values for each flag type in a list of pairs and breaks the list into
 	 * smaller lists for each general flag type. Each list is set as an attribute and then all are
 	 * dispatched to the JSP page.
-	 * @param request
-	 * @param response
-	 * @throws Exception
+	 * @param request HTTPRequest object
+	 * @param response HTTPResponse object
+	 * @throws Exception Issue with DataSource
 	 */
 	private void aggregateMeters(HttpServletRequest request, HttpServletResponse response)
 		throws Exception{
@@ -137,9 +138,9 @@ public class MeterControllerServlet extends HttpServlet {
 	 * Generates the list of meters corresponding to the respective flag, sets list as a request
 	 * attribute, then calls aggregateMeters(). If no meters can be found with the flag type the
 	 * attribute is set to "No Results Found." 
-	 * @param request
-	 * @param response
-	 * @throws Exception
+	 * @param request HTTPRequest object
+	 * @param response HTTP response object
+	 * @throws Exception Issue with DataSource
 	 */
 	private void listMeters(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception{
@@ -159,10 +160,10 @@ public class MeterControllerServlet extends HttpServlet {
 	}
 	
 	/**
-	 * Calls the dashboardDbUtil to query for the specified meter and then runs aggregateMeters()
+	 * Calls the dashboardDbUtil to query for the specified meter and then runs aggregateMeters().
 	 * @param request HTTP request object
 	 * @param response HTTP response object
-	 * @throws Exception
+	 * @throws Exception Issue with DataSource
 	 */
 	private void searchMeter(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
@@ -170,7 +171,7 @@ public class MeterControllerServlet extends HttpServlet {
 		Meter meter = dashboardDbUtil.findMeter(searchID);		//call dashboardDbUtil to query for meter
 		
 		//If the meter is found set it as a request attribute otherwise set the NO_RESULTS attribute
-		if(meter.equals(null)) {
+		if(meter == null) {
 			request.setAttribute("NO_RESULTS", "No Results Found");
 		}
 		else {
@@ -181,7 +182,7 @@ public class MeterControllerServlet extends HttpServlet {
 	}
 
 	/**
-	 * HTTP Get method.
+	 * Calls doGet method.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

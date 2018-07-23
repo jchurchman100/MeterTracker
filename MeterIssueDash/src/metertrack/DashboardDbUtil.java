@@ -31,7 +31,7 @@ public class DashboardDbUtil {
 	 * Queries the database and generates an ArrayList of meters based on the flag passed from MeterControllerServlet.
 	 * @param meterFlag The flag name passed from the MCS
 	 * @return A list of meters for the specified flag
-	 * @throws Exception
+	 * @throws Exception Issue with the dataSource
 	 */
 	public List<Meter> getMeters(String meterFlag) throws Exception{
 		List<Meter> meters = new ArrayList<>();
@@ -89,9 +89,9 @@ public class DashboardDbUtil {
 	
 	/**
 	 * Queries the database and generates an ArrayList of Pair objects with the flag type as the key and the
-	 * value as an Integer representing the occurrences of the flag.
+	 * count value as an Integer representing the occurrences of the flag.
 	 * @return An ArrayList of Pair objects of the form (Flag, Count)
-	 * @throws Exception
+	 * @throws Exception Issue with the dataSource
 	 */
 	public List<Pair<String, Integer>> getTotals() throws Exception{
 		List<Pair<String, Integer>> counts = new ArrayList<>();
@@ -126,10 +126,11 @@ public class DashboardDbUtil {
 	}
 	
 	/**
-	 * Finds the meter information searched for in the Search Bar.
+	 * Finds the meter information searched for in the Search bar. Adds the names of the flag tables
+	 * the meter can be found in to the info field.
 	 * @param searchId The ID of the meter being searched
 	 * @return Meter object containing database information
-	 * @throws Exception
+	 * @throws Exception Issue with the dataSource
 	 */
 	public Meter findMeter(String searchId) throws Exception {
 		Meter m = null; 
@@ -166,14 +167,18 @@ public class DashboardDbUtil {
 					sql = "select * from " + error + " where " + error + ".meter_id = ?";
 					myStmt = myConn.prepareStatement(sql.toUpperCase());
 					myStmt.setInt(1, Integer.parseInt(searchId));
-					if(myStmt.executeQuery() == null) {		//if meter exists in flag table add flag to info
-						info += error + " ";
+					if(myStmt.executeQuery().next() == true) {		//if meter exists in flag table add flag to info
+						info += error + "\n";
 					}
 				}
 				
 				//Create the meter object
 				m = new Meter(id, program, form, info, volA, volB, volC, curA, curB, curC);
 			}
+			return m;
+		}
+		//if meter doesn't exist return null
+		catch(Exception e) {
 			return m;
 		}
 		finally {
