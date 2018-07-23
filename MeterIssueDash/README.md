@@ -2,7 +2,7 @@
 
 A brief JavaDoc documentation can be found at "MeterIssueDash/doc/index.html".
 
-#Summary
+# Summary
 MeterIssueDash is a Java Web Application running on a Servlet(MeterControllerServlet.java) and a JSP, or Java Servers Page(dashboard.jsp). The main objective of the application is to display tables containing different meter alarms, flags, and error names along with the number of occurrances within the Command Center AMI database. The number of occurances are listed in the tables as hyperlinks and when clicked will display a table which lists all the meters currently experiencing the flag or alarm.
 
 *To Do*
@@ -18,7 +18,7 @@ Below is a rundown of each components functionality and what needs to be updated
 7. WebContent
 
 
-##MeterControllerServlet.java 
+## MeterControllerServlet.java 
 
 This is the Java Servlet controlling the other components in the application. You may think of it as the "C" in MVC while "dashboard.jsp" can be viewed as the "V". 
 
